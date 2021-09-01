@@ -22,6 +22,7 @@ namespace BinaryTree
             tree.NodeDegree();
             tree.NodeHeight();
             tree.NodeDepth();
+            tree.NodeLevel();
         }
     }
 }

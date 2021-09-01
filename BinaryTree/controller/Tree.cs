@@ -237,5 +237,23 @@ namespace BinaryTree.controller
             }
             return theMostOld;
         }
+        public void NodeLevel()
+        {
+            Console.WriteLine("\nNodes Level: ");
+            NodeLevel(root, 0);
+        }
+        protected virtual void NodeLevel(Node node, int theLevel)
+        {
+            Console.WriteLine("  Level of '{0}' is: {1}", node.Value, theLevel);
+            theLevel++;
+            if (node.left != null)
+            {
+                NodeLevel(node.left, theLevel);
+            }
+            if (node.right != null)
+            {
+                NodeLevel(node.right, theLevel);
+            }
+        }
     }
 }
