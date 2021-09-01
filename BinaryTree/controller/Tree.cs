@@ -188,5 +188,54 @@ namespace BinaryTree.controller
             }
             return topHeight;
         }
+        public void NodeDepth()
+        {
+            Console.WriteLine("\nNodes Depth: ");
+            Console.WriteLine("  Depth of '{0}' is: {1}", root.Value, 0);
+            NodeDepth(root);
+        }
+        protected virtual void NodeDepth(Node node)
+        {
+            if (node.left != null)
+            {
+                Console.WriteLine("  Depth of '{0}' is: {1}", node.left.Value, FindDepth(root, node.left, 0, 0));
+                NodeDepth(node.left);
+            }
+            if (node.right != null)
+            {
+                Console.WriteLine("  Depth of '{0}' is: {1}", node.right.Value, FindDepth(root, node.right, 0, 0));
+                NodeDepth(node.right);
+            }
+        }
+        private int FindDepth(Node nodeRoot, Node node, int oldOne, int verfFound)
+        {
+            int theMostOld = oldOne;
+            if (nodeRoot.left != null)
+            {
+                theMostOld++;
+                if (nodeRoot.left.Value == node.Value)
+                {
+                    verfFound = 1;
+                }
+                else
+                {
+                    theMostOld = FindDepth(nodeRoot.left, node, theMostOld, verfFound);
+                }
+            }
+            if (nodeRoot.right != null && verfFound == 0)
+            {
+                theMostOld = oldOne;
+                theMostOld++;
+                if (nodeRoot.right.Value == node.Value)
+                {
+                    verfFound = 1;
+                }
+                else
+                {
+                    theMostOld = FindDepth(nodeRoot.right, node, theMostOld, verfFound);
+                }
+            }
+            return theMostOld;
+        }
     }
 }
