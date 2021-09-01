@@ -42,19 +42,19 @@ namespace BinaryTree.controller
         public void ViewTree()
         {
             Console.WriteLine("Tree View: ");
-            Console.WriteLine("  Root: {0}", root.Value);
+            Console.WriteLine("  Root: Node - {0}", root.Value);
             ViewTree(root);
         }
         protected virtual void ViewTree(Node node)
         {
             if (node.left != null)
             {
-                Console.WriteLine("  Left of '{0}': {1}", node.Value, node.left.Value);
+                Console.WriteLine("  Left of '{0}': Node - {1}", node.Value, node.left.Value);
                 ViewTree(node.left);
             }   
             if (node.right != null)
             {
-                Console.WriteLine("  Right of '{0}': {1}", node.Value, node.right.Value);
+                Console.WriteLine("  Right of '{0}': Node - {1}", node.Value, node.right.Value);
                 ViewTree(node.right);
             }
         }
@@ -116,11 +116,11 @@ namespace BinaryTree.controller
         {
             if (node.left == null && node.right == null)
             {
-                Console.WriteLine("  Degree of node {0}: {1}",node.Value, 0);
+                Console.WriteLine("  Degree of node '{0}': {1}",node.Value, 0);
             }
             else if (node.left == null || node.right == null)
             {
-                Console.WriteLine("  Degree of node {0}: {1}", node.Value, 1);
+                Console.WriteLine("  Degree of node '{0}': {1}", node.Value, 1);
                 if (node.left != null)
                 {
                     NodeDegree(node.left);
@@ -132,10 +132,61 @@ namespace BinaryTree.controller
             }
             else
             {
-                Console.WriteLine("  Degree of node {0}: {1}", node.Value, 2);
+                Console.WriteLine("  Degree of node '{0}': {1}", node.Value, 2);
                 NodeDegree(node.left);
                 NodeDegree(node.right);
             }
+        }
+        public void NodeHeight()
+        {
+            Console.WriteLine("\nNodes Height: ");
+            Console.WriteLine("  Height of '{0}' is: {1}", root.Value, FindHeight(root, 0));
+            NodeHeight(root);
+        }
+        protected virtual void NodeHeight(Node node)
+        {
+            if (node.left != null)
+            {
+                Console.WriteLine("  Height of '{0}' is: {1}", node.left.Value, FindHeight(node.left, 0));
+                NodeHeight(node.left);
+            }
+            if (node.right != null)
+            {
+                Console.WriteLine("  Height of '{0}' is: {1}", node.right.Value, FindHeight(node.right, 0));
+                NodeHeight(node.right);
+            }
+        }
+        private int FindHeight(Node node, int theOne)
+        {
+            int bigLeft = 0;
+            int bigRight = 0;
+            int topHeight = theOne;
+            if (node.left != null)
+            {
+                topHeight++;
+                topHeight = FindHeight(node.left, topHeight);
+                bigLeft = topHeight;
+            }
+            if (node.right != null)
+            {
+                topHeight = theOne;
+                topHeight++;
+                topHeight = FindHeight(node.right, topHeight);
+                bigRight = topHeight;
+            }
+
+            if (bigLeft != 0 || bigRight != 0)
+            {
+                if (bigLeft > bigRight)
+                {
+                    topHeight = bigLeft;
+                }
+                else
+                {
+                    topHeight = bigRight;
+                }
+            }
+            return topHeight;
         }
     }
 }
