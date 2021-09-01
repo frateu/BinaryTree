@@ -16,9 +16,9 @@ namespace BinaryTree
             tree.Add(76);
             tree.Add(45);
 
-            //tree.ViewTree();
-            //tree.RootNode();
-            //tree.NodeLeaf();
+            tree.ViewTree();
+            tree.RootNode();
+            tree.NodeLeaf();
             tree.NodeDegree();
         }
     }
