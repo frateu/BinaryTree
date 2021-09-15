@@ -258,8 +258,7 @@ namespace BinaryTree.controller
         public void CheckValue(int SearchValue)
         {
             Console.WriteLine("\nIs there a '{0}' in the tree?", SearchValue);
-            Boolean checker = false;
-            if (CheckValue(root, SearchValue, checker))
+            if (CheckValue(root, SearchValue, false))
             {
                 Console.WriteLine("    There's '{0}' in the tree!", SearchValue);
             }
@@ -268,31 +267,49 @@ namespace BinaryTree.controller
                 Console.WriteLine("    There's no '{0}' in the tree!", SearchValue);
             }
         }
-        protected virtual Boolean CheckValue(Node node, int SearchValue, Boolean checker)
+        protected virtual Boolean CheckValue(Node node, int searchValue, Boolean checker)
         {
             if (node.left != null)
             {
-                if (node.left.Value == SearchValue)
+                if (node.left.Value == searchValue)
                 {
                     checker = true;
                 }
                 else
                 {
-                    checker = CheckValue(node.left, SearchValue, checker);
+                    checker = CheckValue(node.left, searchValue, checker);
                 }
             }
             if (node.right != null)
             {
-                if (node.right.Value == SearchValue)
+                if (node.right.Value == searchValue)
                 {
                     checker = true;
                 }
                 else
                 {
-                    checker = CheckValue(node.right, SearchValue, checker);
+                    checker = CheckValue(node.right, searchValue, checker);
                 }
             }
             return checker;
+        }public void NodeQuantity()
+        {
+            Console.WriteLine("\nNode Quantity: ");
+            Console.WriteLine("    There's {0} nodes in your tree. (With the Root)", (NodeQuantity(root, 0) + 1));
+        }
+        protected virtual int NodeQuantity(Node node, int nodeQuantity)
+        {
+            if (node.left != null)
+            {
+                nodeQuantity++;
+                nodeQuantity = NodeQuantity(node.left, nodeQuantity);
+            }
+            if (node.right != null)
+            {
+                nodeQuantity++;
+                nodeQuantity = NodeQuantity(node.right, nodeQuantity);
+            }
+            return nodeQuantity;
         }
     }
 }

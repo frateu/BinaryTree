@@ -23,8 +23,11 @@ namespace BinaryTree
             tree.NodeHeight();
             tree.NodeDepth();
             tree.NodeLevel();
+
             tree.CheckValue(45);
             tree.CheckValue(22);
+
+            tree.NodeQuantity();
         }
     }
 }
