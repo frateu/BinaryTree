@@ -255,5 +255,44 @@ namespace BinaryTree.controller
                 NodeLevel(node.right, theLevel);
             }
         }
+        public void CheckValue(int SearchValue)
+        {
+            Console.WriteLine("\nIs there a '{0}' in the tree?", SearchValue);
+            Boolean checker = false;
+            if (CheckValue(root, SearchValue, checker))
+            {
+                Console.WriteLine("    There's '{0}' in the tree!", SearchValue);
+            }
+            else
+            {
+                Console.WriteLine("    There's no '{0}' in the tree!", SearchValue);
+            }
+        }
+        protected virtual Boolean CheckValue(Node node, int SearchValue, Boolean checker)
+        {
+            if (node.left != null)
+            {
+                if (node.left.Value == SearchValue)
+                {
+                    checker = true;
+                }
+                else
+                {
+                    checker = CheckValue(node.left, SearchValue, checker);
+                }
+            }
+            if (node.right != null)
+            {
+                if (node.right.Value == SearchValue)
+                {
+                    checker = true;
+                }
+                else
+                {
+                    checker = CheckValue(node.right, SearchValue, checker);
+                }
+            }
+            return checker;
+        }
     }
 }
