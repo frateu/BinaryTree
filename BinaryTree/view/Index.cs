@@ -16,13 +16,10 @@ namespace BinaryTree
             tree.Add(76);
             tree.Add(45);
 
-            tree.ViewTree();
-            tree.RootNode();
-            tree.NodeLeaf();
-            tree.NodeDegree();
-            tree.NodeHeight();
-            tree.NodeDepth();
-            tree.NodeLevel();
+            Console.WriteLine("The degree is: {0}", tree.NodeDegree(5));
+            Console.WriteLine("The height is: {0}", tree.NodeHeight(76));
+            Console.WriteLine("The depth is: {0}", tree.NodeDepth(45));
+            Console.WriteLine("The level is: {0}", tree.NodeLevel(45));
 
             tree.CheckValue(45);
             tree.CheckValue(22);

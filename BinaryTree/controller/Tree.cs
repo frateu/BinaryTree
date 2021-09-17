@@ -107,54 +107,62 @@ namespace BinaryTree.controller
                 }
             }
         }
-        public void NodeDegree()
+        public int NodeDegree(int theNode)
         {
-            Console.WriteLine("\nNodes Degree: ");
-            NodeDegree(root);
+            return NodeDegree(root, 0, theNode);
         }
-        protected virtual void NodeDegree(Node node)
+        protected virtual int NodeDegree(Node node, int degree, int theNode)
         {
-            if (node.left == null && node.right == null)
+            if (node.Value == theNode)
             {
-                Console.WriteLine("  Degree of node '{0}': {1}",node.Value, 0);
-            }
-            else if (node.left == null || node.right == null)
-            {
-                Console.WriteLine("  Degree of node '{0}': {1}", node.Value, 1);
-                if (node.left != null)
+                if (node.left == null && node.right == null)
                 {
-                    NodeDegree(node.left);
+                    degree = 0;
+                }
+                else if (node.left == null || node.right == null)
+                {
+                    degree = 1;
                 }
                 else
                 {
-                    NodeDegree(node.right);
+                    degree = 2;
                 }
             }
             else
             {
-                Console.WriteLine("  Degree of node '{0}': {1}", node.Value, 2);
-                NodeDegree(node.left);
-                NodeDegree(node.right);
+                if (node.left != null)
+                {
+                    degree = NodeDegree(node.left, degree, theNode);
+                }
+                if (node.right != null)
+                {
+                    degree = NodeDegree(node.right, degree, theNode);
+                }
             }
+            return degree;
         }
-        public void NodeHeight()
+        public int NodeHeight(int theNode)
         {
-            Console.WriteLine("\nNodes Height: ");
-            Console.WriteLine("  Height of '{0}' is: {1}", root.Value, FindHeight(root, 0));
-            NodeHeight(root);
+            return NodeHeight(root, theNode, -1);
         }
-        protected virtual void NodeHeight(Node node)
+        protected virtual int NodeHeight(Node node, int theNode, int height)
         {
-            if (node.left != null)
+            if (node.Value == theNode)
             {
-                Console.WriteLine("  Height of '{0}' is: {1}", node.left.Value, FindHeight(node.left, 0));
-                NodeHeight(node.left);
+                height = FindHeight(node, 0);
             }
-            if (node.right != null)
+            else
             {
-                Console.WriteLine("  Height of '{0}' is: {1}", node.right.Value, FindHeight(node.right, 0));
-                NodeHeight(node.right);
+                if (node.left != null)
+                {
+                    height = NodeHeight(node.left, theNode, height);
+                }
+                if (node.right != null)
+                {
+                    height = NodeHeight(node.right, theNode, height);
+                }
             }
+            return height;
         }
         private int FindHeight(Node node, int theOne)
         {
@@ -188,83 +196,95 @@ namespace BinaryTree.controller
             }
             return topHeight;
         }
-        public void NodeDepth()
+        public int NodeDepth(int theNode)
         {
-            Console.WriteLine("\nNodes Depth: ");
-            Console.WriteLine("  Depth of '{0}' is: {1}", root.Value, 0);
-            NodeDepth(root);
+            return NodeDepth(root, theNode, -1);
         }
-        protected virtual void NodeDepth(Node node)
+        protected virtual int NodeDepth(Node node, int theNode, int depth)
         {
-            if (node.left != null)
+            if (node.Value == theNode)
             {
-                Console.WriteLine("  Depth of '{0}' is: {1}", node.left.Value, FindDepth(root, node.left, 0, 0));
-                NodeDepth(node.left);
+                depth = FindDepth(root, node, 0, 0);
             }
-            if (node.right != null)
+            else
             {
-                Console.WriteLine("  Depth of '{0}' is: {1}", node.right.Value, FindDepth(root, node.right, 0, 0));
-                NodeDepth(node.right);
+                if (node.left != null)
+                {
+                    depth = NodeDepth(node.left, theNode, depth);
+                }
+                if (node.right != null)
+                {
+                    depth = NodeDepth(node.right, theNode, depth);
+                }
             }
+            return depth;
         }
         private int FindDepth(Node nodeRoot, Node node, int oldOne, int verfFound)
         {
             int theMostOld = oldOne;
-            if (nodeRoot.left != null)
+            if (nodeRoot != node)
             {
-                theMostOld++;
-                if (nodeRoot.left.Value == node.Value)
+                if (nodeRoot.left != null)
                 {
-                    verfFound = 1;
+                    theMostOld++;
+                    if (nodeRoot.left.Value == node.Value)
+                    {
+                        verfFound = 1;
+                    }
+                    else
+                    {
+                        theMostOld = FindDepth(nodeRoot.left, node, theMostOld, verfFound);
+                    }
                 }
-                else
+                if (nodeRoot.right != null && verfFound == 0)
                 {
-                    theMostOld = FindDepth(nodeRoot.left, node, theMostOld, verfFound);
-                }
-            }
-            if (nodeRoot.right != null && verfFound == 0)
-            {
-                theMostOld = oldOne;
-                theMostOld++;
-                if (nodeRoot.right.Value == node.Value)
-                {
-                    verfFound = 1;
-                }
-                else
-                {
-                    theMostOld = FindDepth(nodeRoot.right, node, theMostOld, verfFound);
+                    theMostOld = oldOne;
+                    theMostOld++;
+                    if (nodeRoot.right.Value == node.Value)
+                    {
+                        verfFound = 1;
+                    }
+                    else
+                    {
+                        theMostOld = FindDepth(nodeRoot.right, node, theMostOld, verfFound);
+                    }
                 }
             }
             return theMostOld;
         }
-        public void NodeLevel()
+        public int NodeLevel(int theNode)
         {
-            Console.WriteLine("\nNodes Level: ");
-            NodeLevel(root, 0);
+            return NodeLevel(root, 0, theNode, 0);
         }
-        protected virtual void NodeLevel(Node node, int theLevel)
+        protected virtual int NodeLevel(Node node, int theLevel, int theNode, int backupValue) // VERIFICAR ISSO AQUI!!!!
         {
-            Console.WriteLine("  Level of '{0}' is: {1}", node.Value, theLevel);
-            theLevel++;
-            if (node.left != null)
+            if (node.Value == theNode)
             {
-                NodeLevel(node.left, theLevel);
-            }
-            if (node.right != null)
-            {
-                NodeLevel(node.right, theLevel);
-            }
-        }
-        public void CheckValue(int SearchValue)
-        {
-            Console.WriteLine("\nIs there a '{0}' in the tree?", SearchValue);
-            if (CheckValue(root, SearchValue, false))
-            {
-                Console.WriteLine("    There's '{0}' in the tree!", SearchValue);
+                backupValue = theLevel;
             }
             else
             {
-                Console.WriteLine("    There's no '{0}' in the tree!", SearchValue);
+                theLevel++;
+                if (node.left != null)
+                {
+                    backupValue = NodeLevel(node.left, theLevel, theNode, backupValue);
+                }
+                if (node.right != null)
+                {
+                    backupValue = NodeLevel(node.right, theLevel, theNode, backupValue);
+                }
+            }
+            return backupValue;
+        }
+        public void CheckValue(int SearchValue)
+        {
+            if (CheckValue(root, SearchValue, false))
+            {
+                Console.WriteLine("There's '{0}' in the tree!", SearchValue);
+            }
+            else
+            {
+                Console.WriteLine("There's no '{0}' in the tree!", SearchValue);
             }
         }
         protected virtual Boolean CheckValue(Node node, int searchValue, Boolean checker)
@@ -292,10 +312,10 @@ namespace BinaryTree.controller
                 }
             }
             return checker;
-        }public void NodeQuantity()
+        }public int NodeQuantity()
         {
             Console.WriteLine("\nNode Quantity: ");
-            Console.WriteLine("    There's {0} nodes in your tree. (With the Root)", (NodeQuantity(root, 0) + 1));
+            return NodeQuantity(root, 0) + 1;
         }
         protected virtual int NodeQuantity(Node node, int nodeQuantity)
         {
