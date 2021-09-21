@@ -312,7 +312,8 @@ namespace BinaryTree.controller
                 }
             }
             return checker;
-        }public int NodeQuantity()
+        }
+        public int NodeQuantity()
         {
             Console.WriteLine("\nNode Quantity: ");
             return NodeQuantity(root, 0) + 1;
@@ -330,6 +331,28 @@ namespace BinaryTree.controller
                 nodeQuantity = NodeQuantity(node.right, nodeQuantity);
             }
             return nodeQuantity;
+        }
+        public void NodeRemove(int theNode)
+        {
+            NodeRemove(root, theNode);
+        }
+        protected virtual void NodeRemove(Node node, int theNode)
+        {
+            if (node.Value == theNode)
+            {
+                if (node.left != null && node.right != null)
+                {
+
+                }
+                else if (node.left != null || node.right != null)
+                {
+
+                }
+                else
+                {
+
+                }
+            }
         }
     }
 }
