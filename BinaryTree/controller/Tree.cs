@@ -12,7 +12,7 @@ namespace BinaryTree.controller
         private Node root;
         public Tree(int value)
         {
-            root = new Node(value);
+            root = new Node(value, null);
         }
         public void Add(int value)
         {
@@ -27,16 +27,22 @@ namespace BinaryTree.controller
             if (value < node.Value)
             {
                 if (node.left == null)
-                    node.left = new Node(value);
+                    node.left = new Node(value, node);
                 else
+                {
                     Add(node.left, value);
+                    node.left.father = node;
+                }    
             }
             else
             {
                 if (node.right == null)
-                    node.right = new Node(value);
+                    node.right = new Node(value, node);
                 else
+                {
                     Add(node.right, value);
+                    node.right.father = node;
+                } 
             }
         }
         public void ViewTree()
@@ -342,15 +348,56 @@ namespace BinaryTree.controller
             {
                 if (node.left != null && node.right != null)
                 {
-
+                    //...
                 }
                 else if (node.left != null || node.right != null)
                 {
-
+                    if (node.left != null)
+                    {
+                        node.left.father = node.father;
+                        if (node.father.left.Value == theNode)
+                        {
+                            node.father.left = node.left;
+                        }
+                        else if (node.father.right.Value == theNode)
+                        {
+                            node.father.right = node.left;
+                        }
+                    }
+                    else if (node.right != null)
+                    {
+                        node.right.father = node.father;
+                        if (node.father.left.Value == theNode)
+                        {
+                            node.father.left = node.right;
+                        }
+                        else if (node.father.right.Value == theNode)
+                        {
+                            node.father.right = node.right;
+                        }
+                    }
                 }
                 else
                 {
-
+                    if (node.father.left.Value == theNode)
+                    {
+                        node.father.left = null;
+                    }
+                    else if (node.father.right.Value == theNode)
+                    {
+                        node.father.right = null;
+                    }
+                }
+            }
+            else
+            {
+                if (node.left != null)
+                {
+                    NodeRemove(node.left, theNode);
+                }
+                if (node.right != null)
+                {
+                    NodeRemove(node.right, theNode);
                 }
             }
         }

@@ -16,6 +16,8 @@ namespace BinaryTree
             tree.Add(76);
             tree.Add(45);
 
+            tree.ViewTree();
+
             Console.WriteLine("The degree is: {0}", tree.NodeDegree(5));
             Console.WriteLine("The height is: {0}", tree.NodeHeight(76));
             Console.WriteLine("The depth is: {0}", tree.NodeDepth(45));
@@ -24,7 +26,11 @@ namespace BinaryTree
             tree.CheckValue(45);
             tree.CheckValue(22);
 
-            tree.NodeQuantity();
+            tree.NodeRemove(76);
+
+            tree.ViewTree();
+
+            Console.WriteLine("In this tree has {0} nodes.", tree.NodeQuantity());
         }
     }
 }
