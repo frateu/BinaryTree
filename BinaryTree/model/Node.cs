@@ -8,14 +8,14 @@ namespace BinaryTree.model
 {
     class Node
     {
-        public Node(double value, Node Father)
+        public Node(int Value, Node Father)
         {
-            Value = value;
+            value = Value;
             father = Father;
         }
         public Node father { get; set; }
         public Node right { get; set; }
         public Node left { get; set; }
-        public double Value { get; set; }
+        public int value { get; set; }
     }
 }

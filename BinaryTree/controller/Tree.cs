@@ -24,7 +24,7 @@ namespace BinaryTree.controller
             {
                 node = root;
             }
-            if (value < node.Value)
+            if (value < node.value)
             {
                 if (node.left == null)
                     node.left = new Node(value, node);
@@ -47,39 +47,39 @@ namespace BinaryTree.controller
         }
         public void ViewTree()
         {
-            Console.WriteLine("Tree View: ");
-            Console.WriteLine("  Root: Node - {0}", root.Value);
+            Console.WriteLine("\nTree View: ");
+            Console.WriteLine("  Root: Node - {0}", root.value);
             ViewTree(root);
         }
         protected virtual void ViewTree(Node node)
         {
             if (node.left != null)
             {
-                Console.WriteLine("  Left of '{0}': Node - {1}", node.Value, node.left.Value);
+                Console.WriteLine("  Left of '{0}': Node - {1}", node.value, node.left.value);
                 ViewTree(node.left);
             }   
             if (node.right != null)
             {
-                Console.WriteLine("  Right of '{0}': Node - {1}", node.Value, node.right.Value);
+                Console.WriteLine("  Right of '{0}': Node - {1}", node.value, node.right.value);
                 ViewTree(node.right);
             }
         }
         public void RootNode()
         {
             Console.WriteLine("\nRoot and Node from the Tree: ");
-            Console.WriteLine("  Root: {0}", root.Value);
+            Console.WriteLine("  Root: {0}", root.value);
             RootNode(root);
         }
         protected virtual void RootNode(Node node)
         {
             if (node.left != null)
             {
-                Console.WriteLine("  Node: {0}", node.left.Value);
+                Console.WriteLine("  Node: {0}", node.left.value);
                 RootNode(node.left);
             }
             if (node.right != null)
             {
-                Console.WriteLine("  Node: {0}", node.right.Value);
+                Console.WriteLine("  Node: {0}", node.right.value);
                 RootNode(node.right);
             }
         }
@@ -94,7 +94,7 @@ namespace BinaryTree.controller
             {
                 if (node.left.left == null && node.left.right == null)
                 {
-                    Console.WriteLine("  Leaf: {0}", node.left.Value);
+                    Console.WriteLine("  Leaf: {0}", node.left.value);
                 }
                 else
                 {
@@ -105,7 +105,7 @@ namespace BinaryTree.controller
             {
                 if (node.right.left == null && node.right.right == null)
                 {
-                    Console.WriteLine("  Leaf: {0}", node.right.Value);
+                    Console.WriteLine("  Leaf: {0}", node.right.value);
                 }
                 else
                 {
@@ -119,7 +119,7 @@ namespace BinaryTree.controller
         }
         protected virtual int NodeDegree(Node node, int degree, int theNode)
         {
-            if (node.Value == theNode)
+            if (node.value == theNode)
             {
                 if (node.left == null && node.right == null)
                 {
@@ -153,7 +153,7 @@ namespace BinaryTree.controller
         }
         protected virtual int NodeHeight(Node node, int theNode, int height)
         {
-            if (node.Value == theNode)
+            if (node.value == theNode)
             {
                 height = FindHeight(node, 0);
             }
@@ -208,7 +208,7 @@ namespace BinaryTree.controller
         }
         protected virtual int NodeDepth(Node node, int theNode, int depth)
         {
-            if (node.Value == theNode)
+            if (node.value == theNode)
             {
                 depth = FindDepth(root, node, 0, 0);
             }
@@ -233,7 +233,7 @@ namespace BinaryTree.controller
                 if (nodeRoot.left != null)
                 {
                     theMostOld++;
-                    if (nodeRoot.left.Value == node.Value)
+                    if (nodeRoot.left.value == node.value)
                     {
                         verfFound = 1;
                     }
@@ -246,7 +246,7 @@ namespace BinaryTree.controller
                 {
                     theMostOld = oldOne;
                     theMostOld++;
-                    if (nodeRoot.right.Value == node.Value)
+                    if (nodeRoot.right.value == node.value)
                     {
                         verfFound = 1;
                     }
@@ -262,9 +262,9 @@ namespace BinaryTree.controller
         {
             return NodeLevel(root, 0, theNode, 0);
         }
-        protected virtual int NodeLevel(Node node, int theLevel, int theNode, int backupValue) // VERIFICAR ISSO AQUI!!!!
+        protected virtual int NodeLevel(Node node, int theLevel, int theNode, int backupValue)
         {
-            if (node.Value == theNode)
+            if (node.value == theNode)
             {
                 backupValue = theLevel;
             }
@@ -286,18 +286,18 @@ namespace BinaryTree.controller
         {
             if (CheckValue(root, SearchValue, false))
             {
-                Console.WriteLine("There's '{0}' in the tree!", SearchValue);
+                Console.WriteLine("\nThere's '{0}' in the tree!", SearchValue);
             }
             else
             {
-                Console.WriteLine("There's no '{0}' in the tree!", SearchValue);
+                Console.WriteLine("\nThere's no '{0}' in the tree!", SearchValue);
             }
         }
         protected virtual Boolean CheckValue(Node node, int searchValue, Boolean checker)
         {
             if (node.left != null)
             {
-                if (node.left.Value == searchValue)
+                if (node.left.value == searchValue)
                 {
                     checker = true;
                 }
@@ -308,7 +308,7 @@ namespace BinaryTree.controller
             }
             if (node.right != null)
             {
-                if (node.right.Value == searchValue)
+                if (node.right.value == searchValue)
                 {
                     checker = true;
                 }
@@ -344,22 +344,57 @@ namespace BinaryTree.controller
         }
         protected virtual void NodeRemove(Node node, int theNode)
         {
-            if (node.Value == theNode)
+            if (node.value == theNode)
             {
                 if (node.left != null && node.right != null)
                 {
-                    //...
+                    Node nodeCompar = new Node(0, null);
+                    Node theBigger = ReturnBigger(node.left, nodeCompar);
+                    if (theBigger.left == null && theBigger.right == null)
+                    {
+                        theBigger.father.right = null;
+                    }
+                    else if (theBigger.left == null || theBigger.right == null)
+                    {
+                        theBigger.left.father = theBigger.father;
+                        if (theBigger.father.left == theBigger)
+                        {
+                            theBigger.father.left = theBigger.left;
+                        }
+                        else
+                        {
+                            theBigger.father.right = theBigger.left;
+                        }
+                    }
+                    else
+                    {
+                        theBigger.left.father = theBigger.father.right;
+                        theBigger.right.father = theBigger.left;
+                    }
+
+                    if (node.father.left.value == theNode)
+                    {
+                        node.father.left = theBigger;
+                    }
+                    else if (node.father.right.value == theNode)
+                    {
+                        node.father.right = theBigger;
+                    }
+
+                    theBigger.father = node.father;
+                    theBigger.left = node.left;
+                    theBigger.right = node.right;
                 }
                 else if (node.left != null || node.right != null)
                 {
                     if (node.left != null)
                     {
                         node.left.father = node.father;
-                        if (node.father.left.Value == theNode)
+                        if (node.father.left.value == theNode)
                         {
                             node.father.left = node.left;
                         }
-                        else if (node.father.right.Value == theNode)
+                        else if (node.father.right.value == theNode)
                         {
                             node.father.right = node.left;
                         }
@@ -367,11 +402,11 @@ namespace BinaryTree.controller
                     else if (node.right != null)
                     {
                         node.right.father = node.father;
-                        if (node.father.left.Value == theNode)
+                        if (node.father.left.value == theNode)
                         {
                             node.father.left = node.right;
                         }
-                        else if (node.father.right.Value == theNode)
+                        else if (node.father.right.value == theNode)
                         {
                             node.father.right = node.right;
                         }
@@ -379,11 +414,11 @@ namespace BinaryTree.controller
                 }
                 else
                 {
-                    if (node.father.left.Value == theNode)
+                    if (node.father.left.value == theNode)
                     {
                         node.father.left = null;
                     }
-                    else if (node.father.right.Value == theNode)
+                    else if (node.father.right.value == theNode)
                     {
                         node.father.right = null;
                     }
@@ -400,6 +435,22 @@ namespace BinaryTree.controller
                     NodeRemove(node.right, theNode);
                 }
             }
+        }
+        private Node ReturnBigger(Node node, Node theBigger)
+        {
+            if (node.value > theBigger.value)
+            {
+                theBigger = node;
+            }
+            if (node.left != null)
+            {
+                theBigger = ReturnBigger(node.left, theBigger);
+            }
+            if (node.right != null)
+            {
+                theBigger = ReturnBigger(node.right, theBigger);
+            }
+            return theBigger;
         }
     }
 }
