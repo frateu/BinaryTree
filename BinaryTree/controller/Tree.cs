@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -495,6 +496,75 @@ namespace BinaryTree.controller
             {
                 InvertTree(node.right);
             }
+        }
+        public void AllPaths()
+        {
+            ArrayList nlr = new ArrayList();
+            ArrayList lnr = new ArrayList();
+            ArrayList lrn = new ArrayList();
+
+            nlr = NLR(root, nlr);
+            lrn = LRN(root, lrn);
+            lnr = LNR(root, lnr);
+
+            Console.WriteLine("All Paths:");
+            Console.Write("  NLR: ");
+            for (int i = 0; i < nlr.Count; i++)
+            {
+                Console.Write(nlr[i] + " ");
+            }
+            Console.WriteLine();
+            Console.Write("  LRN: ");
+            for (int i = 0; i < lrn.Count; i++)
+            {
+                Console.Write(lrn[i] + " ");
+            }
+            Console.WriteLine();
+            Console.Write("  LNR: ");
+            for (int i = 0; i < lnr.Count; i++)
+            {
+                Console.Write(lnr[i] + " ");
+            }
+            Console.WriteLine();
+        }
+        private ArrayList NLR(Node node, ArrayList nlr)
+        {
+            nlr.Add(node.value);
+            if (node.left != null)
+            {
+                NLR(node.left, nlr);
+            }
+            if (node.right != null)
+            {
+                NLR(node.right, nlr);
+            }
+            return nlr;
+        }
+        private ArrayList LRN(Node node, ArrayList lrn)
+        {
+            if (node.left != null)
+            {
+                LRN(node.left, lrn);
+            }
+            if (node.right != null)
+            {
+                LRN(node.right, lrn);
+            }
+            lrn.Add(node.value);
+            return lrn;
+        }
+        private ArrayList LNR(Node node, ArrayList lnr)
+        {
+            if (node.left != null)
+            {
+                LNR(node.left, lnr);
+            }
+            lnr.Add(node.value);
+            if (node.right != null)
+            {
+                LNR(node.right, lnr);
+            }
+            return lnr;
         }
     }
 }

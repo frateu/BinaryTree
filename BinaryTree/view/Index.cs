@@ -13,7 +13,7 @@ namespace BinaryTree
             Tree tree = new Tree(root);
             do
             {
-                Console.WriteLine("---Binary Tree---" +
+                Console.WriteLine("\n---Binary Tree---" +
                                     "\n\nOptions:" +
                                     "\n1 - Add a Node" +
                                     "\n2 - Node Degree" +
@@ -25,6 +25,7 @@ namespace BinaryTree
                                     "\n8 - View Tree" +
                                     "\n9 - Nodes Quantity" +
                                     "\n10 - Invert the Tree" +
+                                    "\n11 - All Paths" +
                                     "\n0 - Exit");
                 Console.Write("Number: ");
                 verfChos = Convert.ToInt32(Console.ReadLine());
@@ -73,6 +74,9 @@ namespace BinaryTree
                         break;
                     case 10:
                         tree.InvertTree();
+                        break;
+                    case 11:
+                        tree.AllPaths();
                         break;
                 }
             } while (verfChos != 0);
