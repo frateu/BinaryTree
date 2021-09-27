@@ -319,10 +319,9 @@ namespace BinaryTree.controller
             }
             return checker;
         }
-        public int NodeQuantity()
+        public void NodeQuantity()
         {
-            Console.WriteLine("\nNode Quantity: ");
-            return NodeQuantity(root, 0) + 1;
+            Console.WriteLine("\nNode Quantity: {0}", (NodeQuantity(root, 0) + 1));
         }
         protected virtual int NodeQuantity(Node node, int nodeQuantity)
         {
@@ -352,7 +351,14 @@ namespace BinaryTree.controller
                     Node theBigger = ReturnBigger(node.left, nodeCompar);
                     if (theBigger.left == null && theBigger.right == null)
                     {
-                        theBigger.father.right = null;
+                        if (theBigger.father.left == theBigger)
+                        {
+                            theBigger.father.left = null;
+                        }
+                        else
+                        {
+                            theBigger.father.right = null;
+                        }
                     }
                     else if (theBigger.left == null || theBigger.right == null)
                     {
@@ -451,6 +457,44 @@ namespace BinaryTree.controller
                 theBigger = ReturnBigger(node.right, theBigger);
             }
             return theBigger;
+        }
+        public void InvertTree()
+        {
+            Console.Write("Before: ");
+            ViewTree();
+            InvertTree(root);
+            Console.Write("\nAfter: ");
+            ViewTree();
+        }
+        protected virtual void InvertTree(Node node)
+        {
+            if (node.left != null && node.right != null)
+            {
+                Node nodeBK = node.right;
+                node.right = node.left;
+                node.left = nodeBK;
+            }
+            else if (node.left != null || node.right != null)
+            {
+                if (node.left != null)
+                {
+                    node.right = node.left;
+                    node.left = null;
+                }
+                else if (node.right != null)
+                {
+                    node.left = node.right;
+                    node.right = null;
+                }
+            }
+            if (node.left != null)
+            {
+                InvertTree(node.left);
+            }
+            if (node.right != null)
+            {
+                InvertTree(node.right);
+            }
         }
     }
 }
