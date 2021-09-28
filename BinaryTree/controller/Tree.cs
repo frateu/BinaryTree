@@ -466,6 +466,7 @@ namespace BinaryTree.controller
             InvertTree(root);
             Console.Write("\nAfter: ");
             ViewTree();
+            InvertTree(root);
         }
         protected virtual void InvertTree(Node node)
         {
